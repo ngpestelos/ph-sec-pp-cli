@@ -1,0 +1,80 @@
+# ph-sec internal spec — FREE-ONLY ship path (Path A).
+# Source: portal.sec.gov.ph API_DOCUMENTATION.pdf + How-to-use OAuth guide.
+# Scope: SEC Number product only (10 free calls/day package). CompanyInformationLookup
+# (paid name search, GIS, AFS, addresses) is intentionally OUT of this CLI binary.
+# Auth: WSO2 OAuth2 Bearer required even for Free package — not public/unauthenticated.
+# Live probe without token: HTTP 401 900902 Missing Credentials (2026-07-31).
+name: ph-sec
+description: "Philippines SEC free SEC Number lookup — registration status by SEC number with local cache. Not name search. Not GIS/AFS. Requires Marketplace OAuth token."
+version: "0.1.0"
+base_url: "https://gwwso2.sec.gov.ph/secnumber/1.0.0"
+health_check_path: "/client_sec_no_status.php"
+category: other
+cli_description: "Look up Philippine company registration status by SEC number (free Marketplace product only). Requires PH_SEC_TOKEN. No name search, no GIS/AFS."
+
+auth:
+  type: bearer_token
+  header: Authorization
+  format: "Bearer {token}"
+  in: header
+  env_vars:
+    - PH_SEC_TOKEN
+
+config:
+  format: toml
+  path: "~/.config/ph-sec-pp-cli/config.toml"
+
+# Manual sync only — free package is quota-metered (~10 calls/day). Do not enable
+# automatic pre-read cache refresh (would burn free credits silently).
+# cache: intentionally disabled
+
+learn:
+  synonyms:
+    "sec number": "sec_no"
+    "registration status": "status"
+  entity_lookup_seeds:
+    field:
+      - canonical: sec_no
+        aliases: [sec number, sec no, registration number]
+      - canonical: status
+        aliases: [registration status, company status]
+
+resources:
+  companies:
+    description: "Free SEC Number product — lookup registration status by known SEC number"
+    endpoints:
+      status:
+        method: GET
+        path: "/client_sec_no_status.php"
+        description: "Registration status for a company by SEC number (free product). Returns name, date approved, licenses, status. Requires PH_SEC_TOKEN. Does not search by company name."
+        example: "  ph-sec-pp-cli companies status --sec-no A199600179"
+        happy_args: "--sec-no=A199600179"
+        params:
+          - name: sec_no
+            flag_name: sec-no
+            type: string
+            required: true
+            description: "SEC registration number (must already know it — this API does not search by name)"
+        response:
+          type: array
+          item: CompanyStatus
+        response_path: data
+
+types:
+  CompanyStatus:
+    fields:
+      - name: sec_no
+        type: string
+        description: SEC registration number
+      - name: company_name
+        type: string
+        description: Registered company name
+      - name: date_approved
+        type: string
+        description: Date registration was approved
+      - name: licenses
+        type: string
+        description: Licenses (as returned by API)
+      - name: status
+        type: string
+        description: Registration status

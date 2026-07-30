@@ -1,0 +1,44 @@
+{
+  "api_name": "ph-sec",
+  "base_url": "https://gwwso2.sec.gov.ph/secnumber/1.0.0",
+  "description": "Free SEC Number status by registration number — local cache, honest limits. Not name search. Not GIS. Requires PH_SEC_TOKEN.",
+  "mcp_ready": "full",
+  "http_transport": "standard",
+  "auth": {
+    "type": "bearer_token",
+    "header": "Authorization",
+    "format": "Bearer {PH_SEC_TOKEN}",
+    "in": "header",
+    "env_vars": [
+      "PH_SEC_TOKEN"
+    ],
+    "env_var_specs": [
+      {
+        "name": "PH_SEC_TOKEN",
+        "kind": "per_call",
+        "required": true,
+        "sensitive": true,
+        "inferred": true
+      }
+    ]
+  },
+  "required_headers": [],
+  "tools": [
+    {
+      "name": "companies_status",
+      "description": "Registration status for a company by SEC number (free product). Returns name, date approved, licenses, status. Requires PH_SEC_TOKEN. Does not search by company name. Required: sec-no.",
+      "method": "GET",
+      "path": "/client_sec_no_status.php",
+      "params": [
+        {
+          "name": "sec-no",
+          "wire_name": "sec_no",
+          "type": "string",
+          "location": "query",
+          "description": "SEC registration number (must already know it — this API does not search by name)",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+version: 2
+project_name: ph-sec-pp-cli
+changelog:
+  disable: true
+builds:
+  - id: ph-sec-pp-cli
+    main: ./cmd/ph-sec-pp-cli
+    binary: ph-sec-pp-cli
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w -X ph-sec-pp-cli/internal/cli.version={{ .Version }}
+    targets:
+      - darwin_amd64
+      - darwin_arm64
+      - linux_amd64
+      - linux_arm64
+      - windows_amd64
+      - windows_arm64
+  - id: ph-sec-pp-mcp
+    main: ./cmd/ph-sec-pp-mcp
+    binary: ph-sec-pp-mcp
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+    targets:
+      - darwin_amd64
+      - darwin_arm64
+      - linux_amd64
+      - linux_arm64
+      - windows_amd64
+      - windows_arm64
+archives:
+  - formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+checksum:
+  name_template: checksums.txt
+brews:
+  - name: ph-sec-pp-cli
+    repository:
+      owner: ngpestelos
+      name: homebrew-tap
+    homepage: "https://github.com/ngpestelos/ph-sec-pp-cli"
+    description: "Free SEC Number status by registration number — local cache, honest limits. Not name search. Not GIS. Requires PH_SEC_TOKEN."
+    install: |
+      bin.install "ph-sec-pp-cli"
+      bin.install "ph-sec-pp-mcp"

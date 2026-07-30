@@ -1,0 +1,56 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-07-30T23:20:16.538153Z",
+  "printing_press_version": "4.29.0",
+  "api_name": "ph-sec",
+  "display_name": "Philippines SEC",
+  "cli_name": "ph-sec-pp-cli",
+  "creator": {
+    "handle": "ngpestelos",
+    "name": "Nestor G Pestelos Jr"
+  },
+  "owner": "ngpestelos",
+  "printer": "ngpestelos",
+  "printer_name": "Nestor G Pestelos Jr",
+  "spec_path": "ph-sec-spec.yaml",
+  "spec_format": "internal",
+  "spec_checksum": "sha256:08b640caceb4eef698b82ea29687953de06bdd0a2dbd66ebe81d95a2473ac754",
+  "run_id": "20260731-070324-5d397568",
+  "category": "other",
+  "description": "Free SEC Number status by registration number — local cache, honest limits. Not name search. Not GIS. Requires PH_SEC_TOKEN.",
+  "mcp_binary": "ph-sec-pp-mcp",
+  "mcp_tool_count": 1,
+  "mcp_ready": "full",
+  "api_version": "0.1.0",
+  "auth_type": "bearer_token",
+  "auth_env_vars": [
+    "PH_SEC_TOKEN"
+  ],
+  "novel_features": [
+    {
+      "name": "Cache-first company show",
+      "command": "company show",
+      "description": "Show registration status for a known SEC number from the local cache, with optional live refresh."
+    },
+    {
+      "name": "Expectation boundary",
+      "command": "which",
+      "description": "State clearly what this free-only CLI does and does not do (no name search, no GIS/AFS)."
+    },
+    {
+      "name": "Offline search over synced companies",
+      "command": "search",
+      "description": "Full-text search previously synced company status rows without network calls."
+    },
+    {
+      "name": "SQL over local mirror",
+      "command": "sql",
+      "description": "Run SQL against the local company status store."
+    },
+    {
+      "name": "Auth and free-tier doctor",
+      "command": "doctor",
+      "description": "Check PH_SEC_TOKEN presence and remind free-product scope and quota."
+    }
+  ]
+}

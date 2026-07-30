@@ -1,0 +1,39 @@
+{
+  "manifest_version": "0.3",
+  "name": "ph-sec-pp-mcp",
+  "display_name": "Philippines SEC",
+  "version": "0.1.0",
+  "description": "Free SEC Number status by registration number — local cache, honest limits. Not name search. Not GIS. Requires PH_SEC_TOKEN.",
+  "author": {
+    "name": "CLI Printing Press"
+  },
+  "license": "Apache-2.0",
+  "server": {
+    "type": "binary",
+    "entry_point": "bin/ph-sec-pp-mcp",
+    "mcp_config": {
+      "command": "${__dirname}/bin/ph-sec-pp-mcp",
+      "args": [],
+      "env": {
+        "PH_SEC_TOKEN": "${user_config.ph_sec_token}"
+      }
+    }
+  },
+  "user_config": {
+    "ph_sec_token": {
+      "type": "string",
+      "title": "PH_SEC_TOKEN",
+      "description": "Sets PH_SEC_TOKEN for the Philippines SEC MCP server.",
+      "sensitive": true,
+      "required": true
+    }
+  },
+  "compatibility": {
+    "claude_desktop": ">=1.0.0",
+    "platforms": [
+      "darwin",
+      "linux",
+      "win32"
+    ]
+  }
+}
