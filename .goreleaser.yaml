@@ -9,7 +9,7 @@ builds:
     env:
       - CGO_ENABLED=0
     ldflags:
-      - -s -w -X ph-sec-pp-cli/internal/cli.version={{ .Version }}
+      - -s -w -X github.com/ngpestelos/ph-sec-pp-cli/internal/cli.version={{ .Version }}
     targets:
       - darwin_amd64
       - darwin_arm64
@@ -39,13 +39,3 @@ archives:
         formats: [zip]
 checksum:
   name_template: checksums.txt
-brews:
-  - name: ph-sec-pp-cli
-    repository:
-      owner: ngpestelos
-      name: homebrew-tap
-    homepage: "https://github.com/ngpestelos/ph-sec-pp-cli"
-    description: "Free SEC Number status by registration number — local cache, honest limits. Not name search. Not GIS. Requires PH_SEC_TOKEN."
-    install: |
-      bin.install "ph-sec-pp-cli"
-      bin.install "ph-sec-pp-mcp"
