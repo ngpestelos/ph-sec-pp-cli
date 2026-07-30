@@ -39,13 +39,3 @@ archives:
         formats: [zip]
 checksum:
   name_template: checksums.txt
-brews:
-  - name: ph-sec-pp-cli
-    repository:
-      owner: ngpestelos
-      name: homebrew-tap
-    homepage: "https://github.com/ngpestelos/ph-sec-pp-cli"
-    description: "Free SEC Number status by registration number — local cache, honest limits. Not name search. Not GIS. Requires PH_SEC_TOKEN."
-    install: |
-      bin.install "ph-sec-pp-cli"
-      bin.install "ph-sec-pp-mcp"
